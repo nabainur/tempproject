@@ -10,18 +10,18 @@ pipeline {
         }
         stage('Build wiremock image'){
             steps{
-                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'hosts', playbook: 'build.yml'
+                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'ansible/hosts', playbook: 'ansible/build.yml'
             }
         }
         stage('Run wiremock docker container'){
             steps{
-                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'hosts', playbook: 'main.yml'
+                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'ansible/hosts', playbook: 'ansible/main.yml'
             }
             
         }
         stage('Install and start nginx'){
             steps{
-                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'hosts', playbook: 'install_nginx.yml'
+                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'ansible/hosts', playbook: 'ansible/install_nginx.yml'
             }           
         }
     }
