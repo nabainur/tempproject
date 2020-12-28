@@ -2,7 +2,7 @@
 - hosts: service
   tasks:
   - name: start wiremock
-    community.general.docker_container:
+    docker_container:
         name: wiremock
         image: wiremock:latest
         network_mode: host
