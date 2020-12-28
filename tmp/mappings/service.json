@@ -1,0 +1,13 @@
+{
+"request": {
+"method": "GET",
+"url": "/id"
+},
+"response": {
+"status": 200,
+"body": "{ ID : hostname }",
+"headers": {
+"Content-Type": "application/json"
+}
+}
+}
