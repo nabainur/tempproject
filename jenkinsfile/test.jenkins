@@ -1,1 +1,28 @@
+#!groovy
 
+pipeline {
+    agent any
+    stages {
+        stage('SCM chekout'){
+            steps{
+                git branch: 'main', credentialsId: 'b2ae7bcf-f465-4fb1-a3ea-607f7fe4627a', url: 'https://github.com/nabainur/tempproject'
+            }
+        }
+        stage('Build wiremock image'){
+            steps{
+                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'hosts', playbook: 'build.yml'
+            }
+        }
+        stage('Run wiremock docker container'){
+            steps{
+                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'hosts', playbook: 'main.yml'
+            }
+            
+        }
+        stage('Install and start nginx'){
+            steps{
+                ansiblePlaybook credentialsId: '3114e58f-a525-4d45-b5e0-9288689b1ab3', disableHostKeyChecking: true, installation: 'DemoAnsible', inventory: 'hosts', playbook: 'install_nginx.yml'
+            }           
+        }
+    }
+}
