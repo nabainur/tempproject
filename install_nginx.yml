@@ -1,0 +1,21 @@
+---
+- hosts: nginx
+  tasks:
+          - name: Install NGINX
+            yum:
+                  name: nginx
+                  state: latest
+          - name: copy conf
+            copy:
+                    src: nginx.conf
+                    dest: /etc/nginx/nginx.conf
+          - name: copy certs
+            copy:
+                    src: certs/
+                    dest: /etc/ssl/certs/
+          - name: start nginx
+            service:
+                    name: nginx
+                    state: started
+
+      

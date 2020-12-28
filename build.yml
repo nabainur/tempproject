@@ -1,0 +1,20 @@
+---
+- hosts: service
+  tasks:
+          - name: copy Dockerfile
+            copy:
+                    src: ./Dockerfile
+                    dest: /root/Dockerfile
+          - name: copy files
+            copy:
+                    src: tmp/
+                    dest: /root/tmp/
+
+          - name: build image
+            docker_image:
+                    name: wiremock
+                    build:
+                            path: /root/
+                    source: build
+                    state: present
+
